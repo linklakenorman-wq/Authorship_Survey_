@@ -1,0 +1,126 @@
+function doPost(e) {
+  try {
+    // Parse the incoming JSON from the survey
+    const data = JSON.parse(e.postData.contents);
+
+    // Open the active spreadsheet (the one this script is attached to)
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getActiveSheet();
+
+    // Column headers — these match every field in the survey
+    // If this is the first submission, write the header row automatically
+    const HEADERS = [
+      'Submitted At',
+      'Subject(s) Taught',
+      'Years Teaching',
+      'Grade Levels',
+      'AI Comfort (1-5)',
+      'AI Cheating Frequency',
+      'Minutes Verifying Work',
+      'Violation Response Preference',
+      'School AI Policy Status',
+      'Assessment Help Needed',
+      'Curriculum Hours/Week',
+      'Curriculum Resources Used',
+      'Biggest Curriculum Challenge',
+      'FERPA/COPPA Familiarity',
+      'Used Unapproved Tools',
+      'AUP Confidence (1-5)',
+      'Biggest Tool Adoption Barrier',
+      'Compliance Resource Needed',
+      'Most Useful Compliance Report Feature',
+      'Dream Tool / Feature',
+      'Standards Match (1-5)',
+      'Admin Support Level',
+      'Feel Supported (1-5)',
+      'External Community Connection',
+      'One Thing to Solve',
+      'Open Response',
+      'AI Checkers Used',
+      'Checker Methods / Prompts',
+      'Checker Prompt Detail',
+      'Checker Confidence (1-5)',
+      'Position in Education',
+      'Open to Authorship Conversation',
+      'Preferred Contact Method',
+      'Email (if provided)'
+    ];
+
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(HEADERS);
+      // Bold and freeze the header row
+      sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
+      sheet.setFrozenRows(1);
+    }
+
+    // Map the incoming data fields to the correct column order
+    const row = [
+      data.submitted_at            || '',
+      data.subject                 || '',
+      data.years_teaching          || '',
+      data.grade_levels            || '',
+      data.ai_comfort              || '',
+      data.ai_cheating_freq        || '',
+      data.verify_minutes          || '',
+      data.violation_outcome       || '',
+      data.school_policy           || '',
+      data.assessment_help         || '',
+      data.curriculum_hours        || '',
+      data.curr_resources          || '',
+      data.curriculum_challenge    || '',
+      data.ferpa_familiarity       || '',
+      data.used_unapproved         || '',
+      data.aup_confidence          || '',
+      data.tool_barrier            || '',
+      data.compliance_need         || '',
+      data.compliance_report_feature || '',
+      data.dream_tool              || '',
+      data.standards_match         || '',
+      data.admin_support           || '',
+      data.feel_supported          || '',
+      data.external_community      || '',
+      data.one_thing               || '',
+      data.open_response           || '',
+      data.ai_checkers              || '',
+      data.checker_prompts          || '',
+      data.checker_prompt_detail    || '',
+      data.checker_confidence       || '',
+      data.edu_level                || '',
+      data.authorship_convo         || '',
+      data.contact_method           || '',
+      data.email                   || ''
+    ];
+
+    sheet.appendRow(row);
+
+    // ── OPTIONAL: Email alert when a new response comes in ──────────────────
+    // Remove the // from the next 3 lines and add your email address to enable
+    // MailApp.sendEmail(
+    //   'YOUR_EMAIL@gmail.com',
+    //   'New survey response — AI Teacher Survey',
+    //   'A new response was submitted at ' + data.submitted_at + '.\n\nSubject taught: ' + data.subject
+    // );
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // Return success
+    return ContentService
+      .createTextOutput(JSON.stringify({ result: 'success' }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    // Log the error and return it (useful for debugging)
+    Logger.log('Error: ' + err.toString());
+    return ContentService
+      .createTextOutput(JSON.stringify({ result: 'error', message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+
+// This handles browser GET requests (e.g. someone visits the URL directly)
+// It just confirms the script is live
+function doGet(e) {
+  return ContentService
+    .createTextOutput('LINK Lake Norman Survey Receiver is active.')
+    .setMimeType(ContentService.MimeType.TEXT);
+}
