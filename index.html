@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI in the Classroom — Teacher Experience Survey</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a0a0a;
+    --navy-dark: #000000;
+    --gold: #2fa8e0;
+    --gold-light: #56c8f5;
+    --cream: #f4f7fb;
+    --warm-white: #ffffff;
+    --text-primary: #111111;
+    --text-secondary: #3a3a3a;
+    --text-muted: #7a7a7a;
+    --border: #dde2e8;
+    --border-focus: #1a8fd1;
+    --card-bg: #ffffff;
+    --section-bg: #eef3f8;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .survey-header {
+    background: #000000;
+    color: #fff;
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .survey-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(26,143,209,0.12) 0%, transparent 70%);
+  }
+  .header-eyebrow {
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .au-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .au-logo-text {
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .au-logo-tm {
+    font-size: 10px;
+    vertical-align: super;
+    color: rgba(255,255,255,0.6);
+  }
+  .survey-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 600px;
+    margin: 0 auto 14px;
+    position: relative;
+  }
+  .survey-header p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.65;
+    position: relative;
+  }
+
+  /* Progress bar */
+  .progress-bar-container {
+    background: var(--navy-dark);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .progress-bar-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+    min-width: 80px;
+    text-align: right;
+  }
+
+  /* Main content */
+  .survey-body {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 36px 20px 80px;
+  }
+
+  /* Sections */
+  .survey-section {
+    margin-bottom: 36px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .section-header {
+    background: var(--section-bg);
+    padding: 18px 28px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-number {
+    width: 30px; height: 30px;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .section-header p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .section-body {
+    padding: 24px 28px;
+  }
+
+  /* Questions */
+  .question {
+    margin-bottom: 28px;
+  }
+  .question:last-child { margin-bottom: 0; }
+
+  .question label, .question .q-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .question .q-label .required {
+    color: #c0392b;
+    margin-left: 3px;
+  }
+  .question .q-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: -6px;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  /* Text inputs */
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: #faf9f6;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    appearance: none;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(26,58,92,0.08);
+    background: #fff;
+  }
+  textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7f6e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  /* Radio & checkbox groups */
+  .option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .option-group.inline { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+
+  .option-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    background: #faf9f6;
+  }
+  .option-item:hover { border-color: #b0a89a; background: #f5f2ec; }
+  .option-item input[type="radio"],
+  .option-item input[type="checkbox"] {
+    width: auto;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--navy);
+    cursor: pointer;
+  }
+  .option-item.selected {
+    border-color: var(--navy);
+    background: #edf2f8;
+  }
+  .option-item label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  /* Scale / Likert */
+  .scale-group {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .scale-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+  .scale-item input[type="radio"] { display: none; }
+  .scale-bubble {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: #faf9f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .scale-item input[type="radio"]:checked + .scale-bubble {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+    transform: scale(1.1);
+  }
+  .scale-item:hover .scale-bubble {
+    border-color: var(--navy);
+    color: var(--navy);
+  }
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+  }
+  .scale-labels span {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Divider */
+  .q-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  /* Submit section */
+  .submit-section {
+    background: #000000;
+    border-radius: 16px;
+    padding: 32px 36px;
+    text-align: center;
+    color: #fff;
+    border: 1px solid rgba(86,200,245,0.2);
+  }
+  .submit-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #56c8f5;
+  }
+  .submit-section p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .btn-submit {
+    background: var(--gold);
+    color: var(--navy-dark);
+    border: none;
+    padding: 14px 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.02em;
+  }
+  .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-submit:active { transform: translateY(0); }
+
+  /* Thank you screen */
+  #thank-you {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+  }
+  #thank-you .ty-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  #thank-you h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  #thank-you p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  #thank-you .ty-link {
+    display: inline-block;
+    margin-top: 24px;
+    color: var(--navy);
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+  }
+
+  /* Summary box (shows after submit) */
+  #response-summary {
+    display: none;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-top: 28px;
+    text-align: left;
+  }
+  #response-summary h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--navy);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .summary-row {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0ece5;
+    font-size: 13px;
+  }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-q { color: var(--text-muted); width: 200px; flex-shrink: 0; font-size: 12px; }
+  .summary-a { color: var(--text-primary); font-weight: 500; }
+
+  @media (max-width: 600px) {
+    .survey-header h1 { font-size: 22px; }
+    .section-body { padding: 18px 16px; }
+    .scale-group { grid-template-columns: repeat(5, 1fr); }
+    .scale-bubble { width: 36px; height: 36px; font-size: 13px; }
+    .submit-section { padding: 24px 20px; }
+    .summary-row { flex-direction: column; gap: 4px; }
+    .summary-q { width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="survey-header">
+  <div class="header-eyebrow">
+    <div class="au-logo">
+      <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fp-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#56c8f5"/>
+            <stop offset="100%" stop-color="#0a5fa8"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 15 C30 15 14 31 14 50 C14 60 18 69 25 75" stroke="url(#fp-grad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M50 22 C34 22 21 35 21 50 C21 62 28 72 38 77" stroke="url(#fp-grad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M50 29 C38 29 28 39 28 50 C28 59 33 67 41 72" stroke="url(#fp-grad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M50 36 C42 36 35 43 35 50 C35 57 39 63 45 67" stroke="url(#fp-grad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M50 43 C46 43 42 47 42 50 C42 53 44 56 47 58" stroke="url(#fp-grad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M50 15 C70 15 86 31 86 50 C86 60 82 69 75 75" stroke="url(#fp-grad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M50 22 C66 22 79 35 79 50 C79 62 72 72 62 77" stroke="url(#fp-grad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M50 29 C62 29 72 39 72 50 C72 59 67 67 59 72" stroke="url(#fp-grad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M50 36 C58 36 65 43 65 50 C65 57 61 63 55 67" stroke="url(#fp-grad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="au-logo-text">Authorship<span class="au-logo-tm">™</span></span>
+    </div>
+  </div>
+  <h1>AI &amp; Technology in the Classroom<br><em style="font-style:italic;font-weight:600">Teacher Experience Survey</em></h1>
+  <p>Your voice shapes what we build. This survey takes about 10 minutes and helps us understand where teachers truly need support — not where we assume they do.</p>
+</div>
+
+<div class="progress-bar-container">
+  <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label">0 of 7 sections</div>
+</div>
+
+<div class="survey-body">
+  <form id="survey-form">
+
+    <!-- Section 1: About You -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number">1</div>
+        <div>
+          <h2>About You</h2>
+          <p>Quick context so we can understand your situation</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="question">
+          <div class="q-label">What subject(s) do you primarily teach? <span class="required">*</span></div>
+          <input type="text" name="subject" placeholder="e.g., Computer Science, Digital Media, IT Fundamentals" required>
+        </div>
+
+        <div class="question">
+          <div class="q-label">How many years have you been teaching? <span class="required">*</span></div>
+          <select name="years_teaching" required>
+            <option value="" disabled selected>Select range</option>
+            <option>Less than 2 years</option>
+            <option>2–5 years</option>
+            <option>6–10 years</option>
+            <option>11–20 years</option>
+            <option>20+ years</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="q-label">What grade levels do you teach? (Select all that apply)</div>
+          <div class="option-group">
+            <label class="option-item">
+              <input type="checkbox" name="grade_levels" value="9th"> <label>9th grade</label>
+            </label>
+            <label class="option-item">
+              <input type="checkbox" name="grade_levels" value="10th"> <label>10th grade</label>
+            </label>
+            <label class="option-item">
+              <input type="checkbox" name="grade_levels" value="11th"> <label>11th grade</label>
+            </label>
+            <label class="option-item">
+              <input type="checkbox" name="grade_levels" value="12th"> <label>12th grade</label>
+            </label>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">How would you describe your own comfort level with AI tools?</div>
+          <div class="scale-group" id="scale-comfort">
+            <label class="scale-item">
+              <input type="radio" name="ai_comfort" value="1">
+              <div class="scale-bubble">1</div>
+            </label>
+            <label class="scale-item">
+              <input type="radio" name="ai_comfort" value="2">
+              <div class="scale-bubble">2</div>
+            </label>
+            <label class="scale-item">
+              <input type="radio" name="ai_comfort" value="3">
+              <div class="scale-bubble">3</div>
+            </label>
+            <label class="scale-item">
+              <input type="radio" name="ai_comfort" value="4">
+              <div class="scale-bubble">4</div>
+            </label>
+            <label class="scale-item">
+              <input type="radio" name="ai_comfort" value="5">
+              <div class="scale-bubble">5</div>
+            </label>
+          </div>
+          <div class="scale-labels">
+            <span>Not at all comfortable</span>
+            <span>Very comfortable</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 2: Student Integrity & Assessment -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number">2</div>
+        <div>
+          <h2>Student Work &amp; Academic Integrity</h2>
+          <p>What you're experiencing day-to-day in your classroom</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="question">
+          <div class="q-label">How often do you suspect students are submitting AI-generated work without disclosure?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="ai_cheating_freq" value="Never"> <label>Never — not something I've encountered</label></label>
+            <label class="option-item"><input type="radio" name="ai_cheating_freq" value="Rarely"> <label>Rarely — a few isolated cases</label></label>
+            <label class="option-item"><input type="radio" name="ai_cheating_freq" value="Sometimes"> <label>Sometimes — it's becoming more common</label></label>
+            <label class="option-item"><input type="radio" name="ai_cheating_freq" value="Often"> <label>Often — it's a regular challenge</label></label>
+            <label class="option-item"><input type="radio" name="ai_cheating_freq" value="Constantly"> <label>Constantly — it's one of my biggest problems</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">Does your school have a clear, written policy on student AI use?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="school_policy" value="Yes, clear"> <label>Yes, and it's clear and useful</label></label>
+            <label class="option-item"><input type="radio" name="school_policy" value="Yes, unclear"> <label>Yes, but it's vague or outdated</label></label>
+            <label class="option-item"><input type="radio" name="school_policy" value="In progress"> <label>We're working on one</label></label>
+            <label class="option-item"><input type="radio" name="school_policy" value="No"> <label>No — nothing exists</label></label>
+            <label class="option-item"><input type="radio" name="school_policy" value="Unknown"> <label>I honestly don't know</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">Roughly how many minutes per week do you spend manually investigating or verifying the authenticity of student work?</div>
+          <select name="verify_minutes">
+            <option value="" disabled selected>Select a range</option>
+            <option>0–15 minutes</option>
+            <option>15–30 minutes</option>
+            <option>30–60 minutes</option>
+            <option>1–2 hours</option>
+            <option>More than 2 hours — it's a significant time cost</option>
+          </select>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">When a potential AI policy violation occurs, which outcome matters most to you?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="violation_outcome" value="Disciplinary"> <label>Immediate flagging for disciplinary action — rules need to have teeth</label></label>
+            <label class="option-item"><input type="radio" name="violation_outcome" value="Teaching moment"> <label>A teaching moment — student should understand why their work didn't comply</label></label>
+            <label class="option-item"><input type="radio" name="violation_outcome" value="Depends"> <label>It depends on context — I need flexibility for both</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">What would help you most with assessment in an AI-saturated classroom?</div>
+          <div class="q-hint">Select all that apply</div>
+          <div class="option-group">
+            <label class="option-item"><input type="checkbox" name="assessment_help" value="New rubrics"> <label>New rubric frameworks designed for AI-era work</label></label>
+            <label class="option-item"><input type="checkbox" name="assessment_help" value="Process-based"> <label>Guidance on process-based assessments (portfolios, reflections)</label></label>
+            <label class="option-item"><input type="checkbox" name="assessment_help" value="Oral defense"> <label>Protocols for verbal/oral defenses of student work</label></label>
+            <label class="option-item"><input type="checkbox" name="assessment_help" value="School policy"> <label>A ready-to-use school AI use policy template</label></label>
+            <label class="option-item"><input type="checkbox" name="assessment_help" value="Training"> <label>Training on how to spot vs. teach with AI-assisted work</label></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 3: Lesson Planning -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number">3</div>
+        <div>
+          <h2>Lesson Planning &amp; Curriculum</h2>
+          <p>The real cost of building your own curriculum from scratch</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="question">
+          <div class="q-label">How many hours per week do you spend creating or adapting AI/tech curriculum (outside of teaching hours)?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="curriculum_hours" value="Less than 1"> <label>Less than 1 hour</label></label>
+            <label class="option-item"><input type="radio" name="curriculum_hours" value="1-3"> <label>1–3 hours</label></label>
+            <label class="option-item"><input type="radio" name="curriculum_hours" value="4-6"> <label>4–6 hours</label></label>
+            <label class="option-item"><input type="radio" name="curriculum_hours" value="7+"> <label>7+ hours — it's unsustainable</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">What curriculum resources do you currently rely on? (Select all that apply)</div>
+          <div class="option-group">
+            <label class="option-item"><input type="checkbox" name="curr_resources" value="AI4K12"> <label>AI4K12 / CSTA resources</label></label>
+            <label class="option-item"><input type="checkbox" name="curr_resources" value="Google"> <label>Google CS Education / Teachable Machine</label></label>
+            <label class="option-item"><input type="checkbox" name="curr_resources" value="MIT"> <label>MIT OpenCourseWare / Scratch</label></label>
+            <label class="option-item"><input type="checkbox" name="curr_resources" value="YouTube"> <label>YouTube / free online content</label></label>
+            <label class="option-item"><input type="checkbox" name="curr_resources" value="Build own"> <label>I build my own from scratch</label></label>
+            <label class="option-item"><input type="checkbox" name="curr_resources" value="Nothing"> <label>I don't have reliable resources</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">What's your biggest curriculum challenge right now?</div>
+          <textarea name="curriculum_challenge" placeholder="Describe what's hardest — no right or wrong answer here..."></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 4: Data, Privacy & Compliance -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number">4</div>
+        <div>
+          <h2>Data, Privacy &amp; Compliance</h2>
+          <p>The invisible risk layer most teachers don't know they're carrying</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="question">
+          <div class="q-label">How familiar are you with FERPA and COPPA as they relate to AI tools in your classroom?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="ferpa_familiarity" value="Never heard"> <label>I've never heard of them in this context</label></label>
+            <label class="option-item"><input type="radio" name="ferpa_familiarity" value="Heard but unsure"> <label>I've heard the terms but don't know how they apply</label></label>
+            <label class="option-item"><input type="radio" name="ferpa_familiarity" value="Somewhat familiar"> <label>Somewhat familiar — I know there are rules but not the specifics</label></label>
+            <label class="option-item"><input type="radio" name="ferpa_familiarity" value="Very familiar"> <label>Very familiar — I actively navigate this</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">Have you ever used a free AI tool with students without knowing if it was school-approved?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="used_unapproved" value="Yes, often"> <label>Yes, often — there's no clear approval process</label></label>
+            <label class="option-item"><input type="radio" name="used_unapproved" value="Yes, once"> <label>Yes, once or twice — it was unclear what was approved</label></label>
+            <label class="option-item"><input type="radio" name="used_unapproved" value="No, careful"> <label>No — I'm careful to check before using anything</label></label>
+            <label class="option-item"><input type="radio" name="used_unapproved" value="No, nothing approved"> <label>No — nothing is approved so I don't use any AI tools</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">How confident do you feel in your ability to distinguish between "ethical AI assistance" and "policy-violating AI usage" under your school's current acceptable use policy?</div>
+          <div class="scale-group">
+            <label class="scale-item"><input type="radio" name="aup_confidence" value="1"><div class="scale-bubble">1</div></label>
+            <label class="scale-item"><input type="radio" name="aup_confidence" value="2"><div class="scale-bubble">2</div></label>
+            <label class="scale-item"><input type="radio" name="aup_confidence" value="3"><div class="scale-bubble">3</div></label>
+            <label class="scale-item"><input type="radio" name="aup_confidence" value="4"><div class="scale-bubble">4</div></label>
+            <label class="scale-item"><input type="radio" name="aup_confidence" value="5"><div class="scale-bubble">5</div></label>
+          </div>
+          <div class="scale-labels">
+            <span>Not confident at all</span>
+            <span>Fully confident</span>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">What is the single biggest barrier to adopting a new digital tool in your current classroom workflow?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="tool_barrier" value="Time to learn"> <label>Lack of time to learn the tool properly</label></label>
+            <label class="option-item"><input type="radio" name="tool_barrier" value="LMS integration"> <label>Poor integration with our existing LMS or platforms</label></label>
+            <label class="option-item"><input type="radio" name="tool_barrier" value="Student privacy"> <label>Student privacy and data concerns</label></label>
+            <label class="option-item"><input type="radio" name="tool_barrier" value="Admin approval"> <label>Getting admin or IT approval takes too long</label></label>
+            <label class="option-item"><input type="radio" name="tool_barrier" value="Cost"> <label>Cost — free tools don't cut it but paid ones aren't funded</label></label>
+            <label class="option-item"><input type="radio" name="tool_barrier" value="Student access"> <label>Students don't all have equal access to devices or internet</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">If you could have one compliance resource, what would it be?</div>
+          <textarea name="compliance_need" placeholder="e.g., a simple checklist, a list of approved tools, a template for documenting tool use..."></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 5: If We Built a Tool for You -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number">5</div>
+        <div>
+          <h2>If We Built a Tool for You</h2>
+          <p>Help us understand what would actually be useful — not just what sounds good</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="question">
+          <div class="q-label">Which of the following would be most helpful to see in an AI-compliance report for student work?</div>
+          <div class="q-hint">Choose the one that would change how you act most</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="compliance_report_feature" value="Probability score"> <label>A probability score estimating likelihood of AI use</label></label>
+            <label class="option-item"><input type="radio" name="compliance_report_feature" value="Edit history"> <label>A history of the student's edit and typing process over time</label></label>
+            <label class="option-item"><input type="radio" name="compliance_report_feature" value="Policy comparison"> <label>A direct comparison between the student's work and your school's policy language</label></label>
+            <label class="option-item"><input type="radio" name="compliance_report_feature" value="All equally"> <label>All three would be equally useful — I need the full picture</label></label>
+            <label class="option-item"><input type="radio" name="compliance_report_feature" value="None helpful"> <label>None of these would change how I handle it</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">Beyond compliance, what's one feature or resource — that doesn't exist yet — that would genuinely make your job easier?</div>
+          <textarea name="dream_tool" placeholder="Dream big. What would you actually use every week?"></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 6: State Standards -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number">6</div>
+        <div>
+          <h2>State Standards &amp; Alignment</h2>
+          <p>The gap between what standards require and what AI teaching actually looks like</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="question">
+          <div class="q-label">How well do current state/district standards match what you're actually teaching in AI/tech?</div>
+          <div class="scale-group">
+            <label class="scale-item"><input type="radio" name="standards_match" value="1"><div class="scale-bubble">1</div></label>
+            <label class="scale-item"><input type="radio" name="standards_match" value="2"><div class="scale-bubble">2</div></label>
+            <label class="scale-item"><input type="radio" name="standards_match" value="3"><div class="scale-bubble">3</div></label>
+            <label class="scale-item"><input type="radio" name="standards_match" value="4"><div class="scale-bubble">4</div></label>
+            <label class="scale-item"><input type="radio" name="standards_match" value="5"><div class="scale-bubble">5</div></label>
+          </div>
+          <div class="scale-labels">
+            <span>Completely mismatched</span>
+            <span>Perfectly aligned</span>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">Do you have support from your administration in addressing the standards gap?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="admin_support" value="Strong"> <label>Yes — strong support and active engagement</label></label>
+            <label class="option-item"><input type="radio" name="admin_support" value="Some"> <label>Some support, but mostly left to figure it out alone</label></label>
+            <label class="option-item"><input type="radio" name="admin_support" value="Little"> <label>Little to none — they're aware but not helping</label></label>
+            <label class="option-item"><input type="radio" name="admin_support" value="None"> <label>No support — the issue isn't even on their radar</label></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 7: Your Capacity & Wellbeing -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number">7</div>
+        <div>
+          <h2>Your Capacity &amp; Wellbeing</h2>
+          <p>The human side — how you're actually doing</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="question">
+          <div class="q-label">On a scale of 1–5, how supported do you feel as an AI/tech educator at your school?</div>
+          <div class="scale-group">
+            <label class="scale-item"><input type="radio" name="feel_supported" value="1"><div class="scale-bubble">1</div></label>
+            <label class="scale-item"><input type="radio" name="feel_supported" value="2"><div class="scale-bubble">2</div></label>
+            <label class="scale-item"><input type="radio" name="feel_supported" value="3"><div class="scale-bubble">3</div></label>
+            <label class="scale-item"><input type="radio" name="feel_supported" value="4"><div class="scale-bubble">4</div></label>
+            <label class="scale-item"><input type="radio" name="feel_supported" value="5"><div class="scale-bubble">5</div></label>
+          </div>
+          <div class="scale-labels">
+            <span>Completely alone</span>
+            <span>Fully supported</span>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">Have you ever connected with other AI/tech teachers outside your school for support or resources?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="external_community" value="Yes, regularly"> <label>Yes, regularly — I have an active network</label></label>
+            <label class="option-item"><input type="radio" name="external_community" value="Yes, occasionally"> <label>Yes, occasionally — but it's inconsistent</label></label>
+            <label class="option-item"><input type="radio" name="external_community" value="Not really"> <label>Not really — I don't know where to look</label></label>
+            <label class="option-item"><input type="radio" name="external_community" value="No"> <label>No — I've been doing this entirely alone</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">If someone was going to build tools or programs to help you, what's the ONE thing they should solve first?</div>
+          <textarea name="one_thing" placeholder="Be honest. No answer is too small or too big..."></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 8: AI Checkers -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number">8</div>
+        <div>
+          <h2>AI Checkers &amp; Detection</h2>
+          <p>How you currently try to verify student and staff compliance</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="question">
+          <div class="q-label">Which AI detection or checker tools do you currently use? (Select all that apply)</div>
+          <div class="option-group">
+            <label class="option-item"><input type="checkbox" name="ai_checkers" value="Turnitin"> <label>Turnitin AI Detection</label></label>
+            <label class="option-item"><input type="checkbox" name="ai_checkers" value="GPTZero"> <label>GPTZero</label></label>
+            <label class="option-item"><input type="checkbox" name="ai_checkers" value="Copyleaks"> <label>Copyleaks</label></label>
+            <label class="option-item"><input type="checkbox" name="ai_checkers" value="Originality.ai"> <label>Originality.ai</label></label>
+            <label class="option-item"><input type="checkbox" name="ai_checkers" value="Winston AI"> <label>Winston AI</label></label>
+            <label class="option-item"><input type="checkbox" name="ai_checkers" value="Built into LMS"> <label>Built into my LMS (Canvas, Schoology, etc.)</label></label>
+            <label class="option-item"><input type="checkbox" name="ai_checkers" value="None"> <label>I don't use any — nothing works well enough</label></label>
+            <label class="option-item"><input type="checkbox" name="ai_checkers" value="Other checker"> <label>Other — I'll describe below</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">When you run student or staff work through an AI checker, what prompts or methods do you use to test for compliance?</div>
+          <div class="q-hint">Select all that apply</div>
+          <div class="option-group">
+            <label class="option-item"><input type="checkbox" name="checker_prompts" value="Paste full text"> <label>Paste the full text directly into the checker</label></label>
+            <label class="option-item"><input type="checkbox" name="checker_prompts" value="Paste paragraphs"> <label>Paste specific paragraphs or sections I'm suspicious of</label></label>
+            <label class="option-item"><input type="checkbox" name="checker_prompts" value="Ask AI to rewrite"> <label>Ask an AI tool to rewrite it and see if it matches the original</label></label>
+            <label class="option-item"><input type="checkbox" name="checker_prompts" value="Compare drafts"> <label>Compare early drafts vs. final submission for sudden quality jumps</label></label>
+            <label class="option-item"><input type="checkbox" name="checker_prompts" value="Google phrases"> <label>Google unusual phrases to see if they appear elsewhere</label></label>
+            <label class="option-item"><input type="checkbox" name="checker_prompts" value="Ask student"> <label>Ask the student to explain or defend their work verbally</label></label>
+            <label class="option-item"><input type="checkbox" name="checker_prompts" value="Check edit history"> <label>Check document edit history (Google Docs revision history, etc.)</label></label>
+            <label class="option-item"><input type="checkbox" name="checker_prompts" value="No method"> <label>I don't have a consistent method — I'm guessing</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">Describe any specific prompts, tests, or techniques you use — anything not covered above</div>
+          <div class="q-hint">This is extremely valuable research. Be as specific as you can — what do you actually type or do?</div>
+          <textarea name="checker_prompt_detail" style="min-height:110px" placeholder="e.g. I copy the intro paragraph into ChatGPT and ask it to identify if this sounds AI-written and why..."></textarea>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">How confident are you in the results your AI checker gives you?</div>
+          <div class="scale-group">
+            <label class="scale-item"><input type="radio" name="checker_confidence" value="1"><div class="scale-bubble">1</div></label>
+            <label class="scale-item"><input type="radio" name="checker_confidence" value="2"><div class="scale-bubble">2</div></label>
+            <label class="scale-item"><input type="radio" name="checker_confidence" value="3"><div class="scale-bubble">3</div></label>
+            <label class="scale-item"><input type="radio" name="checker_confidence" value="4"><div class="scale-bubble">4</div></label>
+            <label class="scale-item"><input type="radio" name="checker_confidence" value="5"><div class="scale-bubble">5</div></label>
+          </div>
+          <div class="scale-labels">
+            <span>No confidence — results are unreliable</span>
+            <span>Fully confident</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 9: Open Space -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number">9</div>
+        <div>
+          <h2>Open Space</h2>
+          <p>Anything we didn't ask that you want us to know</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="question">
+          <div class="q-label">Is there anything else you want us to understand about your experience as a tech/AI teacher?</div>
+          <textarea name="open_response" style="min-height:120px" placeholder="This is your space. Say what needs to be said."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 10: Connect with Authorship -->
+    <div class="survey-section">
+      <div class="section-header">
+        <div class="section-number" style="background:linear-gradient(135deg,#56c8f5,#0a5fa8);">10</div>
+        <div>
+          <h2>Connect with Authorship&#8482;</h2>
+          <p>Help us build the right solutions — directly with the people who need them most</p>
+        </div>
+      </div>
+      <div class="section-body">
+
+        <div class="question">
+          <div class="q-label">What is your position in education?</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="edu_level" value="High School Teacher"> <label>High School Teacher</label></label>
+            <label class="option-item"><input type="radio" name="edu_level" value="Community College Instructor"> <label>Community College Instructor</label></label>
+            <label class="option-item"><input type="radio" name="edu_level" value="College / University Faculty"> <label>College / University Faculty</label></label>
+            <label class="option-item"><input type="radio" name="edu_level" value="School Administrator"> <label>School Administrator (Principal, AP, Dean)</label></label>
+            <label class="option-item"><input type="radio" name="edu_level" value="District Administrator"> <label>District or State Administrator</label></label>
+            <label class="option-item"><input type="radio" name="edu_level" value="IT / Tech Director"> <label>IT Director / Technology Coordinator</label></label>
+            <label class="option-item"><input type="radio" name="edu_level" value="Curriculum Director"> <label>Curriculum or Instructional Coach</label></label>
+            <label class="option-item"><input type="radio" name="edu_level" value="Other role"> <label>Other</label></label>
+          </div>
+        </div>
+
+        <hr class="q-divider">
+
+        <div class="question">
+          <div class="q-label">Would you be available for a conversation with the Authorship&#8482; AI team about the compliance, security, and student integrity problems you're facing?</div>
+          <div class="q-hint">The more insight we build together, the faster we can solve the issues you're having. Your experience is the research.</div>
+          <div class="option-group">
+            <label class="option-item"><input type="radio" name="authorship_convo" value="Yes"> <label>Yes — I want to be part of solving this</label></label>
+            <label class="option-item"><input type="radio" name="authorship_convo" value="Maybe"> <label>Maybe — tell me more about what that looks like</label></label>
+            <label class="option-item"><input type="radio" name="authorship_convo" value="No"> <label>No — survey is my contribution for now</label></label>
+          </div>
+        </div>
+
+        <div id="contact-block" style="display:none;">
+
+          <hr class="q-divider">
+
+          <div class="question">
+            <div class="q-label">Your email address</div>
+            <input type="email" name="email" placeholder="your@email.com">
+          </div>
+
+          <div class="question" style="margin-top:16px;">
+            <div class="q-label">Best way to reach you</div>
+            <div class="option-group">
+              <label class="option-item"><input type="radio" name="contact_method" value="Email"> <label>Email</label></label>
+              <label class="option-item"><input type="radio" name="contact_method" value="Phone / Text"> <label>Phone / Text</label></label>
+              <label class="option-item"><input type="radio" name="contact_method" value="Video call"> <label>Video call (Zoom, Google Meet)</label></label>
+              <label class="option-item"><input type="radio" name="contact_method" value="Any"> <label>Any of the above — I'm flexible</label></label>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Submit -->    <!-- Submit -->
+    <div class="submit-section">
+      <h3>Thank you for your time</h3>
+      <p>Your input goes directly into building real solutions. No data is sold. No spam. Your responses inform the next conversation about what teachers actually need.</p>
+      <button type="submit" class="btn-submit">Submit My Response</button>
+    </div>
+
+  </form>
+
+  <!-- Thank you screen -->
+  <div id="thank-you">
+    <div class="ty-icon">✓</div>
+    <h2>Your voice has been heard.</h2>
+    <p>Thank you for taking the time. What you shared will directly shape how we approach educator support. We're building this for teachers like you.</p>
+    <div style="margin-top:24px;display:inline-flex;align-items:center;gap:8px;opacity:0.5">
+      <svg width="18" height="18" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="fp2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#56c8f5"/><stop offset="100%" stop-color="#0a5fa8"/></linearGradient></defs><path d="M50 15 C30 15 14 31 14 50 C14 60 18 69 25 75" stroke="url(#fp2)" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M50 22 C34 22 21 35 21 50 C21 62 28 72 38 77" stroke="url(#fp2)" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M50 29 C38 29 28 39 28 50 C28 59 33 67 41 72" stroke="url(#fp2)" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M50 36 C42 36 35 43 35 50 C35 57 39 63 45 67" stroke="url(#fp2)" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M50 15 C70 15 86 31 86 50 C86 60 82 69 75 75" stroke="url(#fp2)" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M50 22 C66 22 79 35 79 50 C79 62 72 72 62 77" stroke="url(#fp2)" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M50 29 C62 29 72 39 72 50 C72 59 67 67 59 72" stroke="url(#fp2)" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M50 36 C58 36 65 43 65 50 C65 57 61 63 55 67" stroke="url(#fp2)" stroke-width="6" stroke-linecap="round" fill="none"/></svg>
+      <span style="font-size:13px;color:#555">Authorship™</span>
+    </div>
+    <div id="response-summary"></div>
+  </div>
+
+</div>
+
+<script>
+  // Progress tracking
+  const sections = document.querySelectorAll('.survey-section');
+  const totalSections = sections.length;
+  const fill = document.getElementById('progress-fill');
+  const label = document.getElementById('progress-label');
+
+  function updateProgress() {
+    let completed = 0;
+    sections.forEach((section, i) => {
+      const inputs = section.querySelectorAll('input:required, select:required');
+      const allFilled = Array.from(inputs).every(inp => {
+        if (inp.type === 'radio') {
+          return section.querySelector(`input[name="${inp.name}"]:checked`);
+        }
+        return inp.value.trim() !== '';
+      });
+      if (allFilled || inputs.length === 0) completed++;
+    });
+    const pct = Math.round((completed / totalSections) * 100);
+    fill.style.width = pct + '%';
+    label.textContent = completed + ' of 10 sections';
+  }
+
+  document.getElementById('survey-form').addEventListener('change', updateProgress);
+  document.getElementById('survey-form').addEventListener('input', updateProgress);
+
+  // Show/hide contact block based on Authorship convo question
+  document.querySelectorAll('input[name="authorship_convo"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const block = document.getElementById('contact-block');
+      block.style.display = (radio.value === 'Yes' || radio.value === 'Maybe') ? 'block' : 'none';
+    });
+  });
+
+  // Option item selection highlight
+  document.querySelectorAll('.option-item input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const group = radio.closest('.option-group');
+      group.querySelectorAll('.option-item').forEach(item => item.classList.remove('selected'));
+      radio.closest('.option-item').classList.add('selected');
+    });
+  });
+  document.querySelectorAll('.option-item input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      cb.closest('.option-item').classList.toggle('selected', cb.checked);
+    });
+  });
+
+  // ─── PASTE YOUR APPS SCRIPT URL HERE ───────────────────────────────────────
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVPgEAlSBYSJf2nozVL-DAD0G1iSRkuP60ls7kW_TjvO4OJSfgO7ThWdn7Vu72yG0FmQ/exec';
+  // ────────────────────────────────────────────────────────────────────────────
+
+  // Form submit
+  document.getElementById('survey-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+
+    const data = new FormData(this);
+    const responses = {};
+    for (let [key, val] of data.entries()) {
+      if (responses[key]) {
+        responses[key] = [].concat(responses[key], val);
+      } else {
+        responses[key] = val;
+      }
+    }
+
+    // Flatten multi-selects to comma-separated strings for Sheets
+    const payload = {};
+    for (const [key, val] of Object.entries(responses)) {
+      payload[key] = Array.isArray(val) ? val.join(', ') : val;
+    }
+    payload.submitted_at = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+
+    // Send to Google Sheets via Apps Script
+    if (SCRIPT_URL !== 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') {
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {
+        console.warn('Sheet submission error:', err);
+        // Still show thank-you — don't block the user
+      }
+    } else {
+      console.warn('No Apps Script URL set. Responses not saved to Google Sheets.');
+    }
+
+    // Build on-screen summary
+    const summaryData = [
+      { q: 'Subject', a: responses.subject },
+      { q: 'Years teaching', a: responses.years_teaching },
+      { q: 'AI comfort (1–5)', a: responses.ai_comfort },
+      { q: 'AI cheating frequency', a: responses.ai_cheating_freq },
+      { q: 'Minutes verifying work', a: responses.verify_minutes },
+      { q: 'Violation response preference', a: responses.violation_outcome },
+      { q: 'School AI policy', a: responses.school_policy },
+      { q: 'AUP confidence (1–5)', a: responses.aup_confidence },
+      { q: 'Biggest tool adoption barrier', a: responses.tool_barrier },
+      { q: 'Most useful compliance report feature', a: responses.compliance_report_feature },
+      { q: 'Standards match (1–5)', a: responses.standards_match },
+      { q: 'Feeling supported (1–5)', a: responses.feel_supported },
+      { q: 'External community', a: responses.external_community },
+      { q: 'One thing to solve', a: responses.one_thing },
+      { q: 'AI checkers used', a: responses.ai_checkers },
+      { q: 'Checker methods used', a: responses.checker_prompts },
+      { q: 'Checker prompt detail', a: responses.checker_prompt_detail },
+      { q: 'Checker confidence (1–5)', a: responses.checker_confidence },
+      { q: 'Position in education', a: responses.edu_level },
+      { q: 'Open to Authorship convo', a: responses.authorship_convo },
+      { q: 'Contact method', a: responses.contact_method },
+    ].filter(r => r.a);
+
+    const summaryHTML = summaryData.map(r =>
+      `<div class="summary-row"><span class="summary-q">${r.q}</span><span class="summary-a">${Array.isArray(r.a) ? r.a.join(', ') : r.a}</span></div>`
+    ).join('');
+
+    document.getElementById('response-summary').innerHTML = `<h3>Your Response Summary</h3>${summaryHTML}`;
+    document.getElementById('response-summary').style.display = 'block';
+
+    document.getElementById('survey-form').style.display = 'none';
+    document.getElementById('thank-you').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  updateProgress();
+</script>
+</body>
+</html>
